@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,6 +10,7 @@ import java.util.List;
  * Created by user on 08/07/2017.
  */
 public class PlaygroundMain extends BasePage {
+    public static final String URL = "http://timvroom.com/selenium/playground";
     private final String ANSWER = "answer";
     private final String WROTEBOOK_YES = "wrotebook";
     private final String WROTEBOOK_NO = "didntwritebook";
@@ -20,14 +18,13 @@ public class PlaygroundMain extends BasePage {
     private final String ORANGE = "orange";
     private final String GREEN = "green";
     private final String TXT = "text";
+    protected WebDriver driver;
+    protected WebDriverWait wait;
     private By name = By.id("name");
     private By occupation = By.id("occupation");
     private By bluebox = By.className("bluebox");
     private By radioBtnWroteBook = By.name("wrotebook");
     private By submitButton = By.id("submitbutton");
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-    public static final String URL = "http://timvroom.com/selenium/playground";
 
     public PlaygroundMain(WebDriver driver) {
         super(driver);
@@ -51,6 +48,9 @@ public class PlaygroundMain extends BasePage {
 
     public void insertAnswerId(String elementId, String value) {
         insertText(driver.findElement(By.id(ANSWER + elementId)), value);
+        //to remove
+        driver.findElement(By.id(ANSWER + elementId)).sendKeys(Keys.chord(Keys.CONTROL, Keys.SHIFT, "Q"));
+        driver.findElement(By.id(ANSWER + elementId)).sendKeys(Keys.chord(Keys.ALT, Keys.CONTROL, Keys.ESCAPE));
     }
 
     public int getBlueBoxesNumber() {
@@ -105,6 +105,15 @@ public class PlaygroundMain extends BasePage {
 
     public void setRadioBtnWroteBook(boolean wroteBook) {
         List<WebElement> radioButtons = driver.findElements(radioBtnWroteBook);
+        if (wroteBook) {
+            setRadioBtn(radioButtons, WROTEBOOK_YES);
+        } else {
+            setRadioBtn(radioButtons, WROTEBOOK_NO);
+        }
+    }
+
+    public void setRadioBtnWroteBookAlt(boolean wroteBook) {
+        List<WebElement> radioButtons = driver.findElements(By.xpath("//form/input[2]"));
         if (wroteBook) {
             setRadioBtn(radioButtons, WROTEBOOK_YES);
         } else {

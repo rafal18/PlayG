@@ -50,6 +50,7 @@ public class PlaygroundTest extends BaseDriver {
 
     @Test
     public void Test01(){
+
         mainPage.insertAnswerId(ANSWERONE,driver.getTitle());
     }
     @Test
@@ -87,6 +88,11 @@ public class PlaygroundTest extends BaseDriver {
     @Test
     public void Test09(){
         mainPage.setRadioBtnWroteBook(true);
+    }
+
+    @Test
+    public void Test09alt() {
+        mainPage.setRadioBtnWroteBookAlt(true);
     }
     @Test
     public void Test10(){
